@@ -1,6 +1,7 @@
 import Select from "react-select";
 import EmptyView from "./EmptyView";
 import { useState } from "react";
+import useItemsContext from "../hooks/useItemsContext";
 
 const sortOptions = [
   { value: "default", label: "Sort by default" },
@@ -8,8 +9,9 @@ const sortOptions = [
   { value: "unpacked", label: "Sort by unpacked" },
 ];
 
-function ItemsList({ items, handleToggleItem, handleDeleteItem }) {
+function ItemsList() {
   const [sortBy, setSortBy] = useState("default");
+  const { items, handleDeleteItem, handleToggleItem } = useItemsContext();
 
   const sortedItems = [...items].sort((item) => {
     if (sortBy === "packed") {
@@ -31,7 +33,6 @@ function ItemsList({ items, handleToggleItem, handleDeleteItem }) {
             <Select
               defaultValue={sortOptions[0]}
               options={sortOptions}
-              value={sortBy}
               onChange={(selectedOption) => {
                 setSortBy(selectedOption.value);
               }}
